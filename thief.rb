@@ -8,50 +8,55 @@ class Thief
     @xp    = initialize_xp
     @gold  = initialze_gold
     @str   = initialize_str
+    # we want to determine their stats and immediately agro
+    negotiate
   end
 
-  def attack(opponent_ac)
-    # based on str
-    puts "The Thief swings"
-
-    if roll_to_hit >= opponent_ac
-      # this number should be returned?
-      roll_dmg
-    else
-      puts "The Theif misses"
-    end
+  def initialize_level
+    1 + rand(5)
   end
 
-  def roll_to_hit
-    # roll d20
-    1 + rand(20))
+  def initialize_hp
+    (@level.to_i * (1+ rand(10)))
   end
 
-  def roll_dmg
-    # dmg = lvl + 1d6
-    @level + (1+rand(6))
+  def initialize_ac
+    (@level.to_i + 10)
   end
 
-  def take_dmg(dmg)
-    if @hp < dmg
-      @hp = 0
-      puts "Thief was defeated"
-    else
-      @hp -= dmg
-    end
+  def initialize_xp
+    (@level.to_i * (1 + rand(100)))
+  end
+
+  def initialize_gold
+    (@level.to_i * rand(1000))
   end
 
   def accept_tribute
     # thief accepts gold and flees the encounter
+    puts "The Theif accepts your offer and flees."
+    flee
   end
 
   def demand_tribute
     # demand gold from a Player
-    puts "The Thief demands a tribute of gold. They ask for #{calculate_gold}"
+    generate_threat
+    puts "Give me #{calculate_gold} and I might just let you live."
   end
 
+  def generate_threat
+    # generate a random string
+    threat = Array.new(4) {
+      "You picked the wrong time to get lost buddy.",
+      "Give me what I want and no one gets hurt.",
+      "Suprised you didn't I?",
+      "Hands in the air! This is a hold-up!"
+    }
+    return threat[rand(4)]
   def offer_gold
     # offers gold for it's life
+    offer = (1 + rand((@gold-10))
+    puts "The Theif offers you #{offer} gold in exchange for his life."
   end
 
   def calculate_gold
@@ -59,9 +64,9 @@ class Thief
     @level + (1+rand(100))
   end
 
-  def negotiate
+  def negotiate(character_level)
     # determines if the will flee, offer gold or fight
-    if level < Character.level
+    if @level < character_level
       puts "The thief seems wary"
     else
       demand_tribute

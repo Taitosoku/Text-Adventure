@@ -7,7 +7,11 @@ def attack(opponent_ac,character_type,level)
     # this number should be returned?
     roll_dmg(level)
   else
-    puts "The #{character_type} misses"
+    if character_type != String.empty
+      puts "The #{character_type} misses"
+    else
+      puts "The attack misses"
+    end
   end
 end
 
@@ -29,37 +33,49 @@ end
 def random_clue
   #roll d8 to determine clue awarded
   case (1 + rand(8)).to_i
-  when 1 puts "You see goblin tracks." # set next enemy to goblin
-  when 2 puts "You find a hidden chamber in a nearby tree." # set treasure grab
-  when 3 puts "You hear a rustle in the bushes." # set next enemy encounter
-  when 4 puts "You see a freshly dug hole." # set either trap or treasure
-  when 5 puts "You activate a trip wire and are strung upside down from a tree."
-  when 6 puts "You see a part of a skeleton sticking out of the ground."
-  when 7 puts "You see leaves of 3. Best to let that be."
-  when 8 puts "You see animal tracks. A mix of deer and bear"
+  when 1; puts "You see goblin tracks." # set next enemy to goblin
+  when 2; puts "You find a hidden chamber in a nearby tree." # set treasure grab
+  when 3; puts "You hear a rustle in the bushes." # set next enemy encounter
+  when 4; puts "You see a freshly dug hole." # set either trap or treasure
+  when 5; puts "You activate a trip wire and are strung upside down from a tree."
+  when 6; puts "You see a part of a skeleton sticking out of the ground."
+  when 7; puts "You see leaves of 3. Best to let that be."
+  when 8; puts "You see animal tracks. A mix of deer and bear"
+  end
 end
 
 def random_treasure
   #roll d12 to determine treasure awarded
   case (1+ rand(12))
-  when 1 puts "You see something glittering. Gained 10 gold pieces."
+  when 1
+    puts "You see something glittering. Gained 10 gold pieces."
     #award_gold
-  when 2 puts "You find one Blue Quartz and one Turquoise. Lucky you!"
+  when 2
+    puts "You find one Blue Quartz and one Turquoise. Lucky you!"
     #award_item
-  when 3 puts "You find 2 rough Jaspers."
+  when 3
+    puts "You find 2 rough Jaspers."
     #award_item
-  when 4 puts "You find a delicate chunk of coral"
+  when 4
+    puts "You find a delicate chunk of coral"
     #award_item
-  when 5 puts "you find a " + random_instrument + " hope you know how to play it."
-  when 6 puts "Bling bling it's a MAGIC RING!"
+  when 5
+    puts "you find a " + random_instrument + " hope you know how to play it."
+  when 6
+    puts "Bling bling it's a MAGIC RING!"
     #award_item
-  when 7 puts "Shiny shiny gold. Gained 35 gold pieces."
+  when 7
+    puts "Shiny shiny gold. Gained 35 gold pieces."
     #award_gold
-  when 8 puts "You pick up a vial of swirling gold liquid. Gained healing potion."
+  when 8
+    puts "You pick up a vial of swirling gold liquid. Gained healing potion."
     #award_item
-  when 9 puts "You pick up a vial filled with an inky black liquid. Gained vial of poison."
+  when 9
+    puts "You pick up a vial filled with an inky black liquid. Gained vial of poison."
     #award_item
-  when 10 
+  when 10
+    puts "You shank yorself with a Knife. Game Over!!!"
+  end
 end
 
 def roll_to_hit

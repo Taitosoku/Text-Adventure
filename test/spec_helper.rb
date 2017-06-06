@@ -1,7 +1,7 @@
 # This is a file that contains all the commonly used test methods
-require 'capybara'
-require 'selenium-webdriver'
-require 'dotenv/load'
+require 'capybara/rspec' # specifically rspec within capybara
+require 'selenium-webdriver' # for browser integration
+require 'dotenv/load' # to load native .env file
 require 'holdon'
 #Dotenv.load(env location)
 

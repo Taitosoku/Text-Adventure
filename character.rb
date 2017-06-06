@@ -1,4 +1,5 @@
 # Define Character Class
+require './shared'
 class Character
   attr_reader :max_xp
   attr_accessor :current_xp
@@ -36,6 +37,7 @@ class Character
   def attack
     # attack
   end
+
 
   def negotiate
     # negotiate
