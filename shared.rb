@@ -1,5 +1,10 @@
 # contains shared methods across all classes
 
+def award_item(character_id)
+  # is the character's pouch already full?
+  #pouch = #
+end
+
 def attack(opponent_ac,character_type,level)
   puts "The #{character_type} swings"
 
@@ -15,17 +20,25 @@ def attack(opponent_ac,character_type,level)
   end
 end
 
+def display_items(character_id)
+  # will be linked to character_id in psql db
+  # for now hard coded to just have something to display
+
+end
+
 def investigate
   # roll 1d4 to determine if they find anything
   # they can only investigate 4 times (add flag?)
-  case (1 + rand(4)).to_i
-  when 1
+  inves = 1 + rand(6).to_i
+  puts inves
+  case inves
+  when 1, 5
     puts "There is nothing to be found"
   when 2
     random_clue
   when 3
     puts "Congrats! You are the proud owner of a handful of pocket sand!"
-  when 4
+  when 4, 6
     random_treasure
   end
 end
@@ -75,6 +88,12 @@ def random_treasure
     #award_item
   when 10
     puts "You shank yorself with a Knife. Game Over!!!"
+  when 11
+    puts "you found a satchel containing 3 throwing knives."
+    #award_item
+  when 12
+    puts "you find a pouch containing catnip"
+    #award_item
   end
 end
 
@@ -93,6 +112,6 @@ def take_dmg(hp,dmg)
     hp = 0
     puts "#{character_type} was defeated"
   else
-    hp -= dmg
+    hp = hp - dmg
   end
 end

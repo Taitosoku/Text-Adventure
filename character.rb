@@ -1,20 +1,29 @@
 # Define Character Class
 require './shared'
 class Character
-  attr_reader :max_xp
-  attr_accessor :current_xp
-
   # example of a const(DEFAULT_NAME = 'Player McPlayerFace')
 
   def initialize
-    @name       = "Max"
+    # define defaults and allow these to be read by other mehods
+    attr_reader :max_xp
+    attr_reader :name
+    attr_reader :current_xp
+    attr_reader :current_hp
+    attr_reader :gold
+    attr_reader :ac
+    attr_reader :move_speed
+
     @max_xp     = 7440
     @current_xp = 0
     @max_hp     = 10
-    @curren_hp  = 10
+    @current_hp  = 10
     @ac         = 10
     @gold       = 10
     @move_speed = 30
+  end
+
+  def set_player_name(name)
+    @name = name
   end
 
   def calculate_level(current_xp)
@@ -27,7 +36,7 @@ class Character
     # level 7 4502 - 5879
     # level 8 5880 - 7440
     # simplify because figure out how to calculate xp is HARD
-    puts "#{(Math.log2(1.075) * Math.sqrt(current_xp)).to_i}"
+    (Math.log2(1.075) * Math.sqrt(current_xp)).to_i
   end
 
   def award_xp(awarded_xp)
