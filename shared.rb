@@ -1,8 +1,19 @@
 # contains shared methods across all classes
+require 'dotenv/load'
+Dotenv.load('../.env')
 
-def award_item(character_id)
+def award_item(item_name, item_type)
   # is the character's pouch already full?
-  #pouch = #
+  if pouch_full?
+    puts "You don't have room in your pouch to carry this item."
+    return
+  else
+    db = Sequel.postgres('text_adv_db', :user => ENV['DB_USERNAME'], :password => ENV['DB_PASSWORD'])
+    id = db[:items].select(:id).where(:name => item_name, :type => item_type).first[:id] # must do first[:id] otherwise it returns {id: 4}
+    db[:character_pouch].insert(:item_id => id)
+    puts "#{item_name.capitalize} has been added to your pouch"
+  end
+
 end
 
 def attack(opponent_ac,character_type,level)
@@ -29,9 +40,8 @@ end
 def investigate
   # roll 1d4 to determine if they find anything
   # they can only investigate 4 times (add flag?)
-  inves = 1 + rand(6).to_i
-  puts inves
-  case inves
+
+  case (1 + rand(6)).to_i
   when 1, 5
     puts "There is nothing to be found"
   when 2
@@ -40,6 +50,15 @@ def investigate
     puts "Congrats! You are the proud owner of a handful of pocket sand!"
   when 4, 6
     random_treasure
+  end
+end
+
+def pouch_full?
+  db = Sequel.postgres('text_adv_db', :user => ENV['DB_USERNAME'], :password => ENV['DB_PASSWORD'])
+  if db[:character_pouch].count >= 8
+    return true
+  else
+    return false
   end
 end
 
@@ -64,36 +83,37 @@ def random_treasure
     puts "You see something glittering. Gained 10 gold pieces."
     #award_gold
   when 2
-    puts "You find one Blue Quartz and one Turquoise. Lucky you!"
-    #award_item
+    puts "You find a bright Jasper chunk. Lucky you!"
+    award_item('jasper','treasure')
   when 3
-    puts "You find 2 rough Jaspers."
-    #award_item
+    puts "You find a golden statue."
+    award_item('golden statue', 'treasure')
   when 4
     puts "You find a delicate chunk of coral"
-    #award_item
+    award_item('coral','treasure')
   when 5
     puts "you find a " + random_instrument + " hope you know how to play it."
   when 6
     puts "Bling bling it's a MAGIC RING!"
-    #award_item
+    #award_item('ring')
   when 7
     puts "Shiny shiny gold. Gained 35 gold pieces."
     #award_gold
   when 8
     puts "You pick up a vial of swirling gold liquid. Gained healing potion."
-    #award_item
+    award_item('potion of lesser healing','consumable')
   when 9
     puts "You pick up a vial filled with an inky black liquid. Gained vial of poison."
     #award_item
   when 10
-    puts "You shank yorself with a Knife. Game Over!!!"
+    puts "You find a Silver Bracelet."
+    award_item('silver bracelet','treasure')
   when 11
     puts "you found a satchel containing 3 throwing knives."
     #award_item
   when 12
     puts "you find a pouch containing catnip"
-    #award_item
+    #award_item('')
   end
 end
 

@@ -1,18 +1,19 @@
 # Define Character Class
 require './shared'
+require 'Sequel'
 class Character
+  # define defaults and allow these to be read by other mehods
+  attr_reader :max_xp
+  attr_reader :name
+  attr_reader :current_xp
+  attr_reader :current_hp
+  attr_reader :gold
+  attr_reader :ac
+  attr_reader :move_speed
+
   # example of a const(DEFAULT_NAME = 'Player McPlayerFace')
 
   def initialize
-    # define defaults and allow these to be read by other mehods
-    attr_reader :max_xp
-    attr_reader :name
-    attr_reader :current_xp
-    attr_reader :current_hp
-    attr_reader :gold
-    attr_reader :ac
-    attr_reader :move_speed
-
     @max_xp     = 7440
     @current_xp = 0
     @max_hp     = 10
@@ -46,7 +47,6 @@ class Character
   def attack
     # attack
   end
-
 
   def negotiate
     # negotiate
