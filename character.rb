@@ -1,6 +1,5 @@
 # Define Character Class
 require './shared'
-require 'Sequel'
 class Character
   # define defaults and allow these to be read by other mehods
   attr_reader :max_xp
@@ -18,13 +17,24 @@ class Character
     @current_xp = 0
     @max_hp     = 10
     @current_hp  = 10
+    @level = calculate_level(@current_xp)
     @ac         = 10
     @gold       = 10
     @move_speed = 30
+    @inventory = Array.new()
   end
 
   def set_player_name(name)
     @name = name
+  end
+
+  def set_player_password(password)
+    @password = password
+  end
+
+  def set_player_id
+    # open db
+    #@id =
   end
 
   def calculate_level(current_xp)
@@ -48,29 +58,41 @@ class Character
     # attack
   end
 
-  def negotiate
-    # negotiate
+  def create_character_stats
+    db = Sequel.postgres('text_adv_db', :user => ENV['DB_USERNAME'], :password => ENV['DB_PASSWORD'])
+    db[:character].insert(:name => @name, :level => @level, :hp => @current_hp, :xp => @current_xp, :gold => @gold, :ac => @ac, :password => @password)
   end
 
-  def search
-    # search
+  def create_character_inventory
   end
 
-  def move
-    #move
+  def display_stats
+    # select from charater
   end
 
+  def load_character_stats()
+    # load character stats if starting from a save
+  end
+
+  def load_inventory
+    # load inventory items if starting from a save
+  end
+
+  def save
+    if (@id != nil)
+      update_character_stats(@id)
+      update_character_inventory(@id)
+    else
+      create_character_stats
+      create_character_inventory
+    end
+  end
+
+  def update_character_stats(id)
+    db = Sequel.postgres('text_adv_db', :user => ENV['DB_USERNAME'], :password => ENV['DB_PASSWORD'])
+  end
+
+  def update_character_inventory(id)
+    db = Sequel.postgres('text_adv_db', :user => ENV['DB_USERNAME'], :password => ENV['DB_PASSWORD'])
+  end
 end # end character class
-
-
-@susan = Character.new
-
-# @goblin = Creature.new(name: 'Bob', xp: 25)
-# @susan.awardXP(@goblin.xp)
-@susan.award_xp(3000)
-puts "Susan's current experience points = #{@susan.current_xp}"
-puts "Susan's level is #{@susan.calculate_level(@susan.current_xp)}"
-puts "awarding 1000 xp"
-@susan.award_xp(1000)
-puts "Susan's new experience points = #{@susan.current_xp}"
-puts "Susan's level is #{@susan.calculate_level(@susan.current_xp)}"

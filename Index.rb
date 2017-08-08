@@ -1,5 +1,9 @@
-require './character'
-require './shared'
+require 'dotenv/load'
+Dotenv.load('../.env')
+require 'Sequel'
+require_relative './shared'
+require_relative './character'
+
 
 def display_menu
   # displays the beginning menu
@@ -7,7 +11,8 @@ def display_menu
   puts "[2] Use Item"
   puts "[3] Take Action"
   puts "[4] Display Stats"
-  puts "[5] Exit"
+  puts "[5] Save"
+  puts "[6] Exit"
   take_user_input((gets.chomp).to_i)
 end
 
@@ -26,6 +31,8 @@ def take_user_input(input)
   when 4
     # display user's Stats
   when 5
+    $pc.save
+  when 6
     puts "See you next time!"
     exit
   else
@@ -40,11 +47,19 @@ end
 
 # beginning of the game
 # Initiate player character
-puts "Hello traveler. What shall I call you?"
-pc = Character.new()
-pc.set_player_name(gets.chomp)
-puts "#{pc.name} your adventure begins in the middle of the woods."
-puts " After some time you come to a fork in the path."
-puts "#{pc.name}'s health is #{pc.current_hp}'"
+puts "Hello traveler. You look familiar, have I met you before?(y/n)"
+if gets.chomp == 'y'
+  # load character data
+  puts "Your adventure continues."
+else
+  $pc = Character.new()
+  puts "I must have mistaken you for someone else. What is your name?"
+  $pc.set_player_name(gets.chomp)
+  puts "We should create a secret password just between you and me. What should it be?"
+  $pc.set_player_password(gets.chomp)
+  puts "Cool this is how i'll identify you later."
+  puts "#{$pc.name} your adventure begins in the middle of the woods."
+  puts "After some time you come to a fork in the path."
+end
 
 display_menu
