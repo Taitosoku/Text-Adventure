@@ -21,7 +21,10 @@ class Character
     @ac         = 10
     @gold       = 10
     @move_speed = 30
-    @inventory = Array.new()
+    @inventory_slots = Array.new(4)
+    @equipment_slots = {armor: 'none',
+                        shield: 'none',
+                        weapon: 'rusted sword'}
   end
 
   def set_player_name(name)
@@ -67,7 +70,10 @@ class Character
   end
 
   def display_stats
-    # select from charater
+    puts'HP: ' + @current_hp
+    puts'XP: ' + @current_xp
+    puts'Level: ' + @level
+    puts'Gold: ' + @gold
   end
 
   def load_character_stats()

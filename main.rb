@@ -31,6 +31,7 @@ def take_user_input(input)
     # take some action
   when 4
     # display user's Stats
+    $pc.display_stats
   when 5
     $pc.save
   when 6

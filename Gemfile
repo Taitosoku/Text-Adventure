@@ -1,0 +1,9 @@
+source 'https://rubygems.org'
+ruby '2.4.1'
+
+gem 'dotenv'
+gem 'sequel'
+
+group :test do
+  gem 'rspec'
+end
