@@ -14,7 +14,7 @@ class Character
 
   def initialize
     @max_xp     = 7440
-    @current_xp = 0
+    @current_xp = 1
     @max_hp     = 10
     @current_hp  = 10
     @level = calculate_level(@current_xp)
@@ -50,7 +50,7 @@ class Character
     # level 7 4502 - 5879
     # level 8 5880 - 7440
     # simplify because figure out how to calculate xp is HARD
-    (Math.log2(1.075) * Math.sqrt(current_xp)).to_i
+    (Math.log2(1.075) * Math.sqrt(current_xp)).ceil
   end
 
   def award_xp(awarded_xp)
@@ -70,10 +70,10 @@ class Character
   end
 
   def display_stats
-    puts'HP: ' + @current_hp
-    puts'XP: ' + @current_xp
-    puts'Level: ' + @level
-    puts'Gold: ' + @gold
+    puts "HP: #{@current_hp}"
+    puts "XP: #{@current_xp}"
+    puts "Level: #{@level}"
+    puts "Gold: #{@gold}"
   end
 
   def load_character_stats()
