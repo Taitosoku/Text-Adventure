@@ -1,9 +1,10 @@
 require 'dotenv/load'
-Dotenv.load('../.env')
 require 'Sequel'
+
 require_relative './shared'
 require_relative './character'
 
+Dotenv.load('../.env')
 
 def display_menu
   # displays the beginning menu
