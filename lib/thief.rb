@@ -1,4 +1,5 @@
-# defines the Theif Object
+require_relative './shared'
+# defines the Thief Object
 class Thief
   def initialize
     @type  = "Thief"

@@ -1,5 +1,5 @@
 # Define Character Class
-require './shared'
+require_relative './shared'
 class Character
   # define defaults and allow these to be read by other mehods
   attr_reader :max_xp
@@ -21,10 +21,14 @@ class Character
     @ac         = 10
     @gold       = 10
     @move_speed = 30
-    @inventory_slots = Array.new(4)
-    @equipment_slots = {armor: 'none',
-                        shield: 'none',
-                        weapon: 'rusted sword'}
+    @inventory = { equipment: { armor: 'none',
+                              shield: 'none',
+                              weapon: 'rusted sword'
+                            },
+                   treasure: Array.new(6),
+                   one_use_items: Array.new(4)
+                  }
+
   end
 
   def set_player_name(name)
@@ -66,7 +70,24 @@ class Character
     db[:character].insert(:name => @name, :level => @level, :hp => @current_hp, :xp => @current_xp, :gold => @gold, :ac => @ac, :password => @password)
   end
 
-  def create_character_inventory
+  def display_inventory_options
+    puts "[1] Equipment"
+    puts "[2] Treasure"
+    puts "[3] Useable Items"
+
+    open_inventory(gets.chomp)
+  end
+
+  def display_equipment
+    @inventory[:eqiupment].each_pair { |key, value| puts "#{key} : #{value}"
+  end
+
+  def display_treasure
+    @inventory[:treasure].each { |treasure| puts treasure }
+  end
+
+  def display_one_use_item
+    @inventory[:one_use_items].each { |item| puts item }
   end
 
   def display_stats
@@ -74,6 +95,25 @@ class Character
     puts "XP: #{@current_xp}"
     puts "Level: #{@level}"
     puts "Gold: #{@gold}"
+  end
+
+  def equip(equipment_type, item)
+    @inventory[equipment_type] = item
+  end
+
+  def open_inventory(selection)
+    raise TypeError, 'Argument not numeric' unless selection.is_a? Numberic
+    case selection
+    when 1
+      display_equipment
+    when 2
+      display_treasure
+    when 3
+      display_one_use_item
+    else
+      puts "That is not a valid option"
+      display_inventory_options
+    end
   end
 
   def load_character_stats()

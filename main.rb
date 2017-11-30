@@ -1,15 +1,15 @@
 require 'dotenv/load'
 require 'Sequel'
 
-require_relative './shared'
-require_relative './character'
+require_relative 'lib/shared'
+require_relative 'lib/character'
 
 Dotenv.load('../.env')
 
 def display_menu
   # displays the beginning menu
   puts "[1] Investigate"
-  puts "[2] Use Item"
+  puts "[2] Open Inventory"
   puts "[3] Take Action"
   puts "[4] Display Stats"
   puts "[5] Save"
@@ -43,25 +43,23 @@ def take_user_input(input)
   #continue_story
   display_menu
 end
-=begin
-  Let's start this complex and then we'll simplify as we go
-=end
 
 # beginning of the game
 # Initiate player character
-puts "Hello traveler. You look familiar, have I met you before?(y/n)"
-if gets.chomp == 'y'
+#puts "Hello traveler. You look familiar, have I met you before?(y/n)"
+#if gets.chomp == 'y'
   # load character data
-  puts "Your adventure continues."
-else
+#  puts "Your adventure continues."
+#else
   $pc = Character.new()
-  puts "I must have mistaken you for someone else. What is your name?"
+  puts "What is your name?"
+#  puts "I must have mistaken you for someone else. What is your name?"
   $pc.set_player_name(gets.chomp)
-  puts "We should create a secret password just between you and me. What should it be?"
-  $pc.set_player_password(gets.chomp)
-  puts "Cool this is how i'll identify you later."
+  #puts "We should create a secret password just between you and me. What should it be?"
+  #$pc.set_player_password(gets.chomp)
+  #puts "Cool this is how i'll identify you later."
   puts "#{$pc.name} your adventure begins in the middle of the woods."
   puts "After some time you come to a fork in the path."
-end
+#end
 
 display_menu
