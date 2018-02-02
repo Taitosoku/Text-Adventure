@@ -26,7 +26,7 @@ def take_user_input(input)
     investigate
   when 2
     puts "You open your items pouch."
-    #display_items
+    $pc.display_inventory_options
   when 3
     # take some action
   when 4
@@ -38,6 +38,7 @@ def take_user_input(input)
     puts "See you next time!"
     exit
   else
+    raise NotValidOption
     puts "That's not one of the options"
   end
   #continue_story

@@ -1,0 +1,3 @@
+# bootstrapped ignores
+.DS_Store
+*-test.txt
