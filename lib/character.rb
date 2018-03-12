@@ -1,6 +1,6 @@
 # Define Character Class
 require_relative './shared'
-require 'pry'
+
 class Character
   # define defaults and allow these to be read by other mehods
   attr_reader :max_xp
