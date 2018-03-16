@@ -1,5 +1,6 @@
 # Define Character Class
 require_relative './shared'
+
 class Character
   # define defaults and allow these to be read by other mehods
   attr_reader :max_xp
@@ -22,9 +23,9 @@ class Character
     @gold       = 10
     @move_speed = 30
     @inventory = { equipment: { armor: 'none',
-                              shield: 'none',
-                              weapon: 'rusted sword'
-                            },
+                                shield: 'none',
+                                weapon: 'rusted sword'
+                              },
                    treasure: Array.new(6),
                    one_use_items: Array.new(4)
                   }
@@ -75,19 +76,36 @@ class Character
     puts "[2] Treasure"
     puts "[3] Useable Items"
 
-    open_inventory(gets.chomp)
+    open_inventory(gets.chomp.to_i)
   end
 
   def display_equipment
-    @inventory[:eqiupment].each_pair { |key, value| puts "#{key} : #{value}"
+    @inventory[:equipment].each { |key, value|
+      puts "#{key}:#{value}"
+    }
+    puts "\n"
   end
 
   def display_treasure
-    @inventory[:treasure].each { |treasure| puts treasure }
+    @inventory[:treasure].each { |treasure|
+      if treasure.nil?
+        puts 'empty'
+      else
+        puts treasure
+      end
+    }
+    puts "\n"
   end
 
   def display_one_use_item
-    @inventory[:one_use_items].each { |item| puts item }
+    @inventory[:one_use_items].each { |item|
+      if item.nil?
+        puts 'empty'
+      else
+        puts item
+      end
+    }
+    puts "\n"
   end
 
   def display_stats
@@ -102,7 +120,7 @@ class Character
   end
 
   def open_inventory(selection)
-    raise TypeError, 'Argument not numeric' unless selection.is_a? Numberic
+    raise TypeError, 'Selection must be a number' unless selection.is_a? Numeric
     case selection
     when 1
       display_equipment
@@ -111,7 +129,7 @@ class Character
     when 3
       display_one_use_item
     else
-      puts "That is not a valid option"
+      raise NotValidOption, "#{selection} is not a valid option"
       display_inventory_options
     end
   end
@@ -141,4 +159,6 @@ class Character
   def update_character_inventory(id)
     db = Sequel.postgres('text_adv_db', :user => ENV['DB_USERNAME'], :password => ENV['DB_PASSWORD'])
   end
+
+  class NotValidOption < StandardError; end
 end # end character class

@@ -26,7 +26,7 @@ def take_user_input(input)
     investigate
   when 2
     puts "You open your items pouch."
-    #display_items
+    $pc.display_inventory_options
   when 3
     # take some action
   when 4
@@ -38,6 +38,7 @@ def take_user_input(input)
     puts "See you next time!"
     exit
   else
+    raise NotValidOption
     puts "That's not one of the options"
   end
   #continue_story
@@ -46,6 +47,7 @@ end
 
 # beginning of the game
 # Initiate player character
+<<<<<<< Updated upstream
 #puts "Hello traveler. You look familiar, have I met you before?(y/n)"
 #if gets.chomp == 'y'
   # load character data
@@ -59,6 +61,25 @@ end
   #$pc.set_player_password(gets.chomp)
   #puts "Cool this is how i'll identify you later."
   puts "#{$pc.name} your adventure begins in the middle of the woods."
+=======
+=begin
+puts "Hello traveler. You look familiar, have I met you before?(y/n)"
+if gets.chomp == 'y'
+  # load character data
+  puts "Your adventure continues."
+else
+=end
+  $pc = Character.new()
+=begin
+  puts "I must have mistaken you for someone else. What is your name?"
+  $pc.set_player_name(gets.chomp)
+  puts "We should create a secret password just between you and me. What should it be?"
+  $pc.set_player_password(gets.chomp)
+  puts "Cool this is how i'll identify you later."
+=end
+  #puts "#{$pc.name} your adventure begins in the middle of the woods."
+  puts "Your adventure begins in the middle of the woods."
+>>>>>>> Stashed changes
   puts "After some time you come to a fork in the path."
 #end
 
